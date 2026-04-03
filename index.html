@@ -408,7 +408,7 @@ const state = {
 // ─── URL BUILDERS ─────────────────────────────────────────────
 function intervalFolder(i)  { return i === 'W' ? 'w' : 'q'; }
 function valueLink(v)        { return v === 'T:' ? 'T' : 'kr'; }
-function classFolder(c)      { return c === '∑' ? 'sum' : c; }
+function classFolder(c)      { return c === '∑' ? 'sum' : c === '33_45' ? '33' : c === '90_st' ? '90' : c; }
 function catFolder(i, cat)  {
   const c = cat === 've_vb' ? 've' : cat;
   return intervalFolder(i) + '-' + c;
