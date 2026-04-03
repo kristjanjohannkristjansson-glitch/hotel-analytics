@@ -420,7 +420,7 @@ function buildMainURL() {
   const cF   = catFolder(state.interval, state.category);
   const clF  = classFolder(state.cls);
   const vl   = valueLink(state.value);
-  const page = `${state.interval}_${vl}_${state.category}_${clF}`;
+  const page = `${state.interval}_${vl}_${state.category}_${state.cls}`;
   return `${dept.base}${dept.section}/${iF}/${cF}/${clF}/${page}`;
 }
 
@@ -431,8 +431,8 @@ function buildYxURL() {
   const clF  = classFolder(state.cls);
   const vl   = valueLink(state.value);
   const page = state.interval === 'Q'
-    ? `yx_Q_${vl}_${state.category}_${clF}`
-    : `yx_${vl}_${state.category}_${clF}`;
+    ? `yx_Q_${vl}_${state.category}_${state.cls}`
+    : `yx_${vl}_${state.category}_${state.cls}`;
   return `${dept.base}${dept.section}/${iF}/${cF}/${clF}/${page}`;
 }
 
