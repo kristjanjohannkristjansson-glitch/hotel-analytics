@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Navigator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg:       #0f1117;
+    --surface:  #181c27;
+    --border:   #252a38;
+    --muted:    #3a4155;
+    --text:     #c8cdd8;
+    --dim:      #606880;
+    --accent:   #4f8ef7;
+    --accent2:  #7dd3a8;
+    --accent3:  #f0a050;
+    --danger:   #e05555;
+    --mono:     'IBM Plex Mono', monospace;
+    --sans:     'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13px;
+    min-height: 100vh;
+    padding: 28px 24px;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .header-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: .08em;
+  }
+
+  /* ── Context row ── */
+  .context-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .context-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 160px;
+  }
+
+  /* ── Axis rows ── */
+  .axis-block {
+    margin-bottom: 16px;
+  }
+  .axis-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .axis-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* ── Buttons ── */
+  button.sel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all .12s;
+    white-space: nowrap;
+    position: relative;
+  }
+  button.sel:hover {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+  button.sel.active {
+    background: #1a2235;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  button.sel.active-green {
+    background: #162a22;
+    border-color: var(--accent2);
+    color: #fff;
+  }
+  button.sel.active-amber {
+    background: #261e10;
+    border-color: var(--accent3);
+    color: #fff;
+  }
+  button.sel.disabled-btn {
+    opacity: .35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .btn-hint {
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 300;
+    color: var(--dim);
+    margin-left: 4px;
+  }
+
+  /* ── Select dropdowns ── */
+  select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+  }
+  select:focus { border-color: var(--accent); }
+  label.sel-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* ── Output area ── */
+  .output {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .output-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 8px;
+  }
+  .url-display {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    word-break: break-all;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .url-display.muted { color: var(--muted); font-style: italic; }
+
+  /* ── Action buttons ── */
+  .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn-nav {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 7px 18px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: .06em;
+    transition: opacity .12s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-nav:hover { opacity: .85; }
+  .btn-nav.primary   { background: var(--accent);  color: #fff; }
+  .btn-nav.secondary { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); }
+  .btn-nav.tertiary  { background: transparent; border: 1px solid var(--accent3); color: var(--accent3); }
+  .btn-nav.inactive  { opacity: .3; pointer-events: none; cursor: not-allowed; }
+
+  /* ── State badge ── */
+  .state-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .1em;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #1a2235;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    margin-right: 4px;
+  }
+  .state-pill .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .state-pill.has-yx .dot  { background: var(--accent2); }
+  .state-pill.has-tr .dot  { background: var(--accent3); }
+
+  .state-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 10px;
+  }
+
+  /* ── Code display ── */
+  .code-key {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text);
+    background: #0a0d14;
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-title">Analytics Navigator</span>
+  <span class="header-sub">// payroll module · prototype</span>
+</div>
+
+<!-- Context: Hotel + Department -->
+<div class="context-row">
+  <div class="context-group">
+    <label class="sel-label">Hotel</label>
+    <select id="sel-hotel" onchange="onHotelChange()">
+      <option value="hc">Hótel Cabin</option>
+    </select>
+  </div>
+  <div class="context-group">
+    <label class="sel-label">Department</label>
+    <select id="sel-dept" onchange="render()">
+      <option value="housekeeping">Housekeeping / Þernudeild</option>
+    </select>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Axis 1: Interval -->
+<div class="axis-block">
+  <div class="axis-label">Interval</div>
+  <div class="btn-group" id="grp-interval">
+    <button class="sel active" data-val="W" onclick="pick('interval','W',this)">W <span class="btn-hint">Weekly</span></button>
+    <button class="sel" data-val="Q" onclick="pick('interval','Q',this)">Q <span class="btn-hint">Quarterly</span></button>
+  </div>
+</div>
+
+<!-- Axis 2: Value -->
+<div class="axis-block">
+  <div class="axis-label">Value</div>
+  <div class="btn-group" id="grp-value">
+    <button class="sel active-green" data-val="T:" onclick="pick('value','T:',this)">T: <span class="btn-hint">Hours</span></button>
+    <button class="sel" data-val="kr." onclick="pick('value','kr.',this)">kr. <span class="btn-hint">ISK</span></button>
+  </div>
+</div>
+
+<!-- Axis 3: Category -->
+<div class="axis-block">
+  <div class="axis-label">Category</div>
+  <div class="btn-group" id="grp-category">
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<!-- Axis 4: Class -->
+<div class="axis-block">
+  <div class="axis-label">Rate class</div>
+  <div class="btn-group" id="grp-class">
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Output -->
+<div class="output">
+  <div class="output-label">Target page</div>
+  <div class="url-display" id="url-main">—</div>
+
+  <div class="actions">
+    <a class="btn-nav primary" id="link-main" href="#" target="_blank">→ Open page</a>
+    <a class="btn-nav secondary inactive" id="link-yx" href="#" target="_blank">⬦ Charts (yx)</a>
+    <a class="btn-nav tertiary inactive" id="link-tr" href="#" target="_blank">⟳ Trend (tr)</a>
+  </div>
+
+  <div class="state-row" id="state-row"></div>
+</div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────
+const HOTELS = {
+  hc: {
+    name: 'Hótel Cabin',
+    depts: {
+      housekeeping: {
+        name: 'Housekeeping',
+        base: 'https://sites.google.com/view/prufa-upplysingasida-hotela/',
+        section: 'payroll',
+        // Hardcoded tr URLs (only 2 exist, both W+vv+∑)
+        trLinks: {
+          'W_T:_vv_∑':  'payroll/tr/tr_W_T_vv',
+          'W_kr._vv_∑': 'payroll/tr/tr_W_kr_vv',
+        }
+      }
+    }
+  }
+};
+
+// ─── CATEGORIES by value ──────────────────────────────────────
+const CATEGORIES = {
+  'T:':  [
+    { val: 'vv',    label: 'vv', hint: 'viðvera' },
+    { val: 've',    label: 've', hint: 'veikindi' },
+    { val: 'vb',    label: 'vb', hint: 'vb. veikindi' },
+  ],
+  'kr.': [
+    { val: 'vv',    label: 'vv',    hint: 'viðvera' },
+    { val: 've_vb', label: 've_vb', hint: 'veikindi' },
+  ]
+};
+
+// ─── CLASSES by category ─────────────────────────────────────
+const CLASSES = {
+  default: [
+    { val: '∑',  label: '∑',  hint: 'total' },
+    { val: 'dv', label: 'dv', hint: 'dagvinna' },
+    { val: 'yv', label: 'yv', hint: 'yfirvinna' },
+    { val: '90', label: '90', hint: '90%' },
+    { val: 'st', label: 'st', hint: 'staðg.' },
+    { val: '33', label: '33', hint: '33%', noNav: true },
+    { val: '45', label: '45', hint: '45%', noNav: true },
+  ],
+  ve_vb: [
+    { val: '∑',     label: '∑',      hint: 'total' },
+    { val: 'dv',    label: 'dv',     hint: 'dagvinna' },
+    { val: 'yv',    label: 'yv',     hint: 'yfirvinna' },
+    { val: '90_st', label: '90+st',  hint: '90%+staðg.' },
+    { val: '33_45', label: '33+45',  hint: '33%+45%', noNav: true },
+  ]
+};
+
+// ─── STATE ────────────────────────────────────────────────────
+const state = {
+  hotel:    'hc',
+  dept:     'housekeeping',
+  interval: 'W',
+  value:    'T:',
+  category: 'vv',
+  cls:      '∑'
+};
+
+// ─── URL BUILDERS ─────────────────────────────────────────────
+function intervalFolder(i)  { return i === 'W' ? 'w' : 'q'; }
+function valueLink(v)        { return v === 'T:' ? 'T' : 'kr'; }
+function classFolder(c)      { return c === '∑' ? 'sum' : c; }
+function catFolder(i, cat)  {
+  const c = cat === 've_vb' ? 've' : cat;
+  return intervalFolder(i) + '-' + c;
+}
+
+function buildMainURL() {
+  const dept = HOTELS[state.hotel].depts[state.dept];
+  const iF   = intervalFolder(state.interval);
+  const cF   = catFolder(state.interval, state.category);
+  const clF  = classFolder(state.cls);
+  const vl   = valueLink(state.value);
+  const page = `${state.interval}_${vl}_${state.category}_${clF}`;
+  return `${dept.base}${dept.section}/${iF}/${cF}/${clF}/${page}`;
+}
+
+function buildYxURL() {
+  const dept = HOTELS[state.hotel].depts[state.dept];
+  const iF   = intervalFolder(state.interval);
+  const cF   = catFolder(state.interval, state.category);
+  const clF  = classFolder(state.cls);
+  const vl   = valueLink(state.value);
+  const page = state.interval === 'Q'
+    ? `yx_Q_${vl}_${state.category}_${clF}`
+    : `yx_${vl}_${state.category}_${clF}`;
+  return `${dept.base}${dept.section}/${iF}/${cF}/${clF}/${page}`;
+}
+
+function buildTrURL() {
+  const dept = HOTELS[state.hotel].depts[state.dept];
+  const key  = `${state.interval}_${state.value}_${state.category}_${state.cls}`;
+  const path = dept.trLinks[key];
+  return path ? dept.base + path : null;
+}
+
+// ─── EXISTENCE RULES ──────────────────────────────────────────
+function hasYx() {
+  if (state.cls === 'st') return false;
+  if (state.interval === 'W' && state.value === 'T:' && state.category === 'vb') return false;
+  return true;
+}
+function hasTr() {
+  return state.interval === 'W' && state.category === 'vv' && state.cls === '∑';
+}
+
+// ─── RENDER ───────────────────────────────────────────────────
+function render() {
+  // Sync state from selects for hotel/dept
+  state.hotel = document.getElementById('sel-hotel').value;
+  state.dept  = document.getElementById('sel-dept').value;
+
+  rebuildCategoryButtons();
+  rebuildClassButtons();
+
+  const mainURL = buildMainURL();
+
+  // URL display
+  document.getElementById('url-main').textContent = mainURL;
+
+  // Main link
+  const linkMain = document.getElementById('link-main');
+  linkMain.href = mainURL;
+  linkMain.classList.remove('inactive');
+
+  // yx link
+  const linkYx = document.getElementById('link-yx');
+  if (hasYx()) {
+    linkYx.href = buildYxURL();
+    linkYx.classList.remove('inactive');
+  } else {
+    linkYx.href = '#';
+    linkYx.classList.add('inactive');
+  }
+
+  // tr link
+  const trURL = buildTrURL();
+  const linkTr = document.getElementById('link-tr');
+  if (hasTr() && trURL) {
+    linkTr.href = trURL;
+    linkTr.classList.remove('inactive');
+  } else {
+    linkTr.href = '#';
+    linkTr.classList.add('inactive');
+  }
+
+  // State pills
+  const stateRow = document.getElementById('state-row');
+  stateRow.innerHTML = `
+    <span class="state-pill ${hasYx() ? 'has-yx' : ''}">
+      <span class="dot"></span>yx ${hasYx() ? 'available' : 'n/a'}
+    </span>
+    <span class="state-pill ${hasTr() ? 'has-tr' : ''}">
+      <span class="dot"></span>tr ${hasTr() ? 'available' : 'n/a'}
+    </span>
+    <span class="code-key">${state.interval}_${valueLink(state.value)}_${state.category}_${classFolder(state.cls)}</span>
+  `;
+}
+
+function rebuildCategoryButtons() {
+  const grp  = document.getElementById('grp-category');
+  const cats = CATEGORIES[state.value];
+  const colors = { vv: 'active', ve: 'active-green', vb: 'active-amber', ve_vb: 'active-green' };
+
+  // Ensure state.category is valid for current value
+  const valid = cats.map(c => c.val);
+  if (!valid.includes(state.category)) {
+    state.category = cats[0].val;
+  }
+
+  grp.innerHTML = '';
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'sel' + (state.category === cat.val ? ' ' + (colors[cat.val] || 'active') : '');
+    btn.innerHTML = `${cat.label} <span class="btn-hint">${cat.hint}</span>`;
+    btn.onclick = () => { state.cls = mapClass(state.category, cat.val); state.category = cat.val; render(); };
+    grp.appendChild(btn);
+  });
+}
+
+function rebuildClassButtons() {
+  const grp     = document.getElementById('grp-class');
+  const classes = state.category === 've_vb' ? CLASSES.ve_vb : CLASSES.default;
+
+  // Ensure state.cls is valid for current category
+  const valid = classes.map(c => c.val);
+  if (!valid.includes(state.cls)) {
+    state.cls = '∑';
+  }
+
+  grp.innerHTML = '';
+  classes.forEach(cls => {
+    const btn = document.createElement('button');
+    const isActive = state.cls === cls.val;
+    btn.className = 'sel' + (isActive ? ' active-amber' : '') + (cls.noNav ? ' disabled-btn' : '');
+    btn.innerHTML = `${cls.label} <span class="btn-hint">${cls.hint}</span>`;
+    if (!cls.noNav) {
+      btn.onclick = () => { state.cls = cls.val; render(); };
+    }
+    if (cls.noNav) {
+      btn.title = 'Sheet exists — no navigation page';
+    }
+    grp.appendChild(btn);
+  });
+}
+
+// ─── CATEGORY MAPPING across value switches ───────────────────
+const CAT_MAP_TO_KR = { vv: 'vv', ve: 've_vb', vb: 've_vb', ve_vb: 've_vb' };
+const CAT_MAP_TO_T  = { vv: 'vv', ve_vb: 've', ve: 've',    vb: 'vb'       };
+
+function mapCategory(newValue) {
+  if (newValue === 'kr.') return CAT_MAP_TO_KR[state.category] || 'vv';
+  if (newValue === 'T:')  return CAT_MAP_TO_T[state.category]  || 'vv';
+  return state.category;
+}
+
+// ─── CLASS MAPPING when category changes ──────────────────────
+// Into ve_vb: individual classes collapse to combined
+const CLS_TO_VEVB   = { '33': '33_45', '45': '33_45', '90': '90_st', 'st': '90_st' };
+// Out of ve_vb: combined classes split to nearest individual
+const CLS_FROM_VEVB = { '33_45': '33', '90_st': '90' };
+
+function mapClass(currentCat, newCat) {
+  if (newCat === 've_vb' && currentCat !== 've_vb') {
+    return CLS_TO_VEVB[state.cls] || state.cls;
+  }
+  if (currentCat === 've_vb' && newCat !== 've_vb') {
+    return CLS_FROM_VEVB[state.cls] || state.cls;
+  }
+  return state.cls;
+}
+
+// ─── PICK helpers ─────────────────────────────────────────────
+function pick(axis, val, btn) {
+  if (axis === 'value') {
+    const newCat   = mapCategory(val);
+    state.cls      = mapClass(state.category, newCat);
+    state.category = newCat;
+  }
+  if (axis === 'category') {
+    state.cls = mapClass(state.category, val);
+  }
+  state[axis] = val;
+  // Update button active states in the group
+  const grpId  = { interval: 'grp-interval', value: 'grp-value' }[axis];
+  const colors = { interval: 'active', value: 'active-green' };
+  if (grpId) {
+    document.querySelectorAll('#' + grpId + ' button.sel').forEach(b => {
+      b.className = 'sel';
+    });
+    btn.className = 'sel ' + (colors[axis] || 'active');
+  }
+  render();
+}
+
+function onHotelChange() {
+  // In future: repopulate dept dropdown based on hotel
+  render();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
