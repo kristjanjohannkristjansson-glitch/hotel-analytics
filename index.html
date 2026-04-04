@@ -8,18 +8,18 @@
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
 
   :root {
-    --bg:       #0f1117;
-    --surface:  #181c27;
-    --border:   #252a38;
-    --muted:    #3a4155;
-    --text:     #c8cdd8;
-    --dim:      #606880;
-    --accent:   #4f8ef7;
-    --accent2:  #7dd3a8;
-    --accent3:  #f0a050;
-    --danger:   #e05555;
-    --mono:     'IBM Plex Mono', monospace;
-    --sans:     'IBM Plex Sans', sans-serif;
+    --bg:      #0f1117;
+    --surface: #181c27;
+    --border:  #252a38;
+    --muted:   #3a4155;
+    --text:    #c8cdd8;
+    --dim:     #606880;
+    --accent:  #4f8ef7;
+    --accent2: #7dd3a8;
+    --accent3: #f0a050;
+    --mono:    'IBM Plex Mono', monospace;
+    --sans:    'IBM Plex Sans', sans-serif;
+    --tile:    52px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,17 +29,15 @@
     color: var(--text);
     font-family: var(--sans);
     font-size: 13px;
-    min-height: 100vh;
-    padding: 28px 24px;
+    padding: 20px 18px;
   }
 
-  /* ── Header ── */
   .header {
     display: flex;
     align-items: baseline;
-    gap: 12px;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
   .header-title {
@@ -50,220 +48,130 @@
     text-transform: uppercase;
     color: var(--accent);
   }
-  .header-sub {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--dim);
-    letter-spacing: .08em;
-  }
+  .header-sub { font-family: var(--mono); font-size: 10px; color: var(--dim); }
 
-  /* ── Context row ── */
-  .context-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
+  .context-row { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .context-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
+  label.sel-label {
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--dim);
   }
-  .context-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 160px;
-  }
-
-  /* ── Axis rows ── */
-  .axis-block {
-    margin-bottom: 16px;
-  }
-  .axis-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .axis-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-  .btn-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  /* ── Buttons ── */
-  button.sel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--dim);
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 5px 12px;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: all .12s;
-    white-space: nowrap;
-    position: relative;
-  }
-  button.sel:hover {
-    border-color: var(--muted);
-    color: var(--text);
-  }
-  button.sel.active {
-    background: #1a2235;
-    border-color: var(--accent);
-    color: #fff;
-  }
-  button.sel.active-green {
-    background: #162a22;
-    border-color: var(--accent2);
-    color: #fff;
-  }
-  button.sel.active-amber {
-    background: #261e10;
-    border-color: var(--accent3);
-    color: #fff;
-  }
-  button.sel.disabled-btn {
-    opacity: .35;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-  .btn-hint {
-    font-family: var(--sans);
-    font-size: 9px;
-    font-weight: 300;
-    color: var(--dim);
-    margin-left: 4px;
-  }
-
-  /* ── Select dropdowns ── */
   select {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    outline: none;
-    width: 100%;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--mono); font-size: 11px;
+    padding: 5px 8px; border-radius: 3px; cursor: pointer; outline: none;
   }
   select:focus { border-color: var(--accent); }
-  label.sel-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
 
-  /* ── Divider ── */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 20px 0;
+  .axis-block { margin-bottom: 14px; }
+  .axis-label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--dim);
+    margin-bottom: 7px; display: flex; align-items: center; gap: 8px;
   }
+  .axis-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* ── Output area ── */
+  .tile-group { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .tile {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; cursor: pointer;
+  }
+  .tile-img-wrap {
+    width: var(--tile); height: var(--tile);
+    border-radius: 8px; border: 2px solid var(--border);
+    overflow: hidden; background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .12s, transform .1s, box-shadow .12s;
+  }
+  .tile-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.5; transition: opacity .12s;
+  }
+  .tile-img-wrap .tile-text {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    color: var(--dim); transition: color .12s;
+  }
+  .tile-label {
+    font-family: var(--mono); font-size: 8px; color: var(--dim);
+    letter-spacing: .05em; text-align: center;
+    max-width: var(--tile); transition: color .12s;
+  }
+  .tile:not(.disabled):hover .tile-img-wrap { border-color: var(--muted); transform: translateY(-1px); }
+  .tile:not(.disabled):hover .tile-img-wrap img { opacity: 0.8; }
+  .tile:not(.disabled):hover .tile-text { color: var(--text); }
+  .tile:not(.disabled):hover .tile-label { color: var(--text); }
+
+  .tile.active-blue .tile-img-wrap  { border-color: var(--accent);  box-shadow: 0 0 10px rgba(79,142,247,.3); }
+  .tile.active-green .tile-img-wrap { border-color: var(--accent2); box-shadow: 0 0 10px rgba(125,211,168,.25); }
+  .tile.active-amber .tile-img-wrap { border-color: var(--accent3); box-shadow: 0 0 10px rgba(240,160,80,.25); }
+  .tile.active-blue .tile-img-wrap img,
+  .tile.active-green .tile-img-wrap img,
+  .tile.active-amber .tile-img-wrap img { opacity: 1; }
+  .tile.active-blue .tile-text  { color: var(--accent); }
+  .tile.active-green .tile-text { color: var(--accent2); }
+  .tile.active-amber .tile-text { color: var(--accent3); }
+  .tile.active-blue .tile-label  { color: var(--accent); }
+  .tile.active-green .tile-label { color: var(--accent2); }
+  .tile.active-amber .tile-label { color: var(--accent3); }
+  .tile.disabled { opacity: 0.28; cursor: not-allowed; pointer-events: none; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
   .output {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 14px 16px;
-    margin-bottom: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 12px 14px;
   }
   .output-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: 8px;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 7px;
   }
   .url-display {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--accent);
-    word-break: break-all;
-    line-height: 1.6;
-    margin-bottom: 10px;
+    font-family: var(--mono); font-size: 9px; color: var(--accent);
+    word-break: break-all; line-height: 1.6; margin-bottom: 12px;
   }
-  .url-display.muted { color: var(--muted); font-style: italic; }
 
-  /* ── Action buttons ── */
-  .actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .action-tile {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; cursor: pointer; text-decoration: none;
   }
-  .btn-nav {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 7px 18px;
-    border-radius: 3px;
-    border: none;
-    cursor: pointer;
-    letter-spacing: .06em;
-    transition: opacity .12s;
-    text-decoration: none;
-    display: inline-block;
+  .action-img-wrap {
+    width: 44px; height: 44px; border-radius: 8px;
+    border: 2px solid var(--border); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface);
+    transition: border-color .12s, box-shadow .12s, transform .1s;
   }
-  .btn-nav:hover { opacity: .85; }
-  .btn-nav.primary   { background: var(--accent);  color: #fff; }
-  .btn-nav.secondary { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); }
-  .btn-nav.tertiary  { background: transparent; border: 1px solid var(--accent3); color: var(--accent3); }
-  .btn-nav.inactive  { opacity: .3; pointer-events: none; cursor: not-allowed; }
+  .action-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .action-img-wrap .act-text {
+    font-family: var(--mono); font-size: 11px;
+    font-weight: 600; color: var(--dim);
+  }
+  .action-label { font-family: var(--mono); font-size: 8px; color: var(--dim); }
+  .action-tile.primary   .action-img-wrap { border-color: var(--accent);  box-shadow: 0 0 8px rgba(79,142,247,.2); }
+  .action-tile.secondary .action-img-wrap { border-color: var(--accent2); box-shadow: 0 0 8px rgba(125,211,168,.15); }
+  .action-tile.tertiary  .action-img-wrap { border-color: var(--accent3); box-shadow: 0 0 8px rgba(240,160,80,.15); }
+  .action-tile.primary   .action-label { color: var(--accent); }
+  .action-tile.secondary .action-label { color: var(--accent2); }
+  .action-tile.tertiary  .action-label { color: var(--accent3); }
+  .action-tile:not(.inactive):hover .action-img-wrap { transform: translateY(-1px); opacity: .85; }
+  .action-tile.inactive { opacity: .28; pointer-events: none; }
 
-  /* ── State badge ── */
+  .state-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; align-items: center; }
   .state-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: .1em;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: #1a2235;
-    border: 1px solid var(--border);
-    color: var(--dim);
-    margin-right: 4px;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--mono); font-size: 9px; padding: 2px 7px;
+    border-radius: 10px; background: #1a2235;
+    border: 1px solid var(--border); color: var(--dim);
   }
-  .state-pill .dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--muted);
-  }
-  .state-pill.has-yx .dot  { background: var(--accent2); }
-  .state-pill.has-tr .dot  { background: var(--accent3); }
-
-  .state-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 10px;
-  }
-
-  /* ── Code display ── */
+  .state-pill .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); }
+  .state-pill.on-yx .dot { background: var(--accent2); }
+  .state-pill.on-tr .dot { background: var(--accent3); }
   .code-key {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text);
-    background: #0a0d14;
-    border: 1px solid var(--border);
-    padding: 2px 6px;
-    border-radius: 2px;
+    font-family: var(--mono); font-size: 10px; color: var(--text);
+    background: #0a0d14; border: 1px solid var(--border);
+    padding: 2px 7px; border-radius: 3px;
   }
 </style>
 </head>
@@ -271,10 +179,9 @@
 
 <div class="header">
   <span class="header-title">Analytics Navigator</span>
-  <span class="header-sub">// payroll module · prototype</span>
+  <span class="header-sub">// payroll · prototype</span>
 </div>
 
-<!-- Context: Hotel + Department -->
 <div class="context-row">
   <div class="context-group">
     <label class="sel-label">Hotel</label>
@@ -285,65 +192,62 @@
   <div class="context-group">
     <label class="sel-label">Department</label>
     <select id="sel-dept" onchange="render()">
-      <option value="housekeeping">Housekeeping / Þernudeild</option>
+      <option value="housekeeping">Housekeeping</option>
     </select>
   </div>
 </div>
 
-<hr class="divider">
+<hr>
 
-<!-- Axis 1: Interval -->
 <div class="axis-block">
   <div class="axis-label">Interval</div>
-  <div class="btn-group" id="grp-interval">
-    <button class="sel active" data-val="W" onclick="pick('interval','W',this)">W <span class="btn-hint">Weekly</span></button>
-    <button class="sel" data-val="Q" onclick="pick('interval','Q',this)">Q <span class="btn-hint">Quarterly</span></button>
-  </div>
+  <div class="tile-group" id="grp-interval"></div>
 </div>
-
-<!-- Axis 2: Value -->
 <div class="axis-block">
   <div class="axis-label">Value</div>
-  <div class="btn-group" id="grp-value">
-    <button class="sel active-green" data-val="T:" onclick="pick('value','T:',this)">T: <span class="btn-hint">Hours</span></button>
-    <button class="sel" data-val="kr." onclick="pick('value','kr.',this)">kr. <span class="btn-hint">ISK</span></button>
-  </div>
+  <div class="tile-group" id="grp-value"></div>
 </div>
-
-<!-- Axis 3: Category -->
 <div class="axis-block">
   <div class="axis-label">Category</div>
-  <div class="btn-group" id="grp-category">
-    <!-- populated by JS -->
-  </div>
+  <div class="tile-group" id="grp-category"></div>
 </div>
-
-<!-- Axis 4: Class -->
 <div class="axis-block">
   <div class="axis-label">Rate class</div>
-  <div class="btn-group" id="grp-class">
-    <!-- populated by JS -->
-  </div>
+  <div class="tile-group" id="grp-class"></div>
 </div>
 
-<hr class="divider">
+<hr>
 
-<!-- Output -->
 <div class="output">
   <div class="output-label">Target page</div>
   <div class="url-display" id="url-main">—</div>
-
-  <div class="actions">
-    <a class="btn-nav primary" id="link-main" href="#" target="_blank">→ Open page</a>
-    <a class="btn-nav secondary inactive" id="link-yx" href="#" target="_blank">⬦ Charts (yx)</a>
-    <a class="btn-nav tertiary inactive" id="link-tr" href="#" target="_blank">⟳ Trend (tr)</a>
-  </div>
-
+  <div class="action-row" id="action-row"></div>
   <div class="state-row" id="state-row"></div>
 </div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────
+// Single image: string. Dual split tile: [left, right] (right can be null for text fallback)
+const IMG = {
+  W:           'images/w.png',
+  Q:           'images/Q.png',
+  'T:':        'images/T.png',
+  'kr.':       'images/kr.png',
+  vv:          'images/vv.png',
+  ve:          'images/ve.png',
+  vb:          'images/vb.png',
+  ve_vb:       ['images/ve.png', 'images/vb.png'],   // split tile
+  '∑':         'images/summa.png',
+  dv:          'images/dv.png',
+  yv:          'images/yv.png',
+  '90':        'images/90.png',
+  '90_st':     ['images/90.png', null],               // 90 image + "st" text
+  st:          null,
+  '33_45':     null,                                  // text fallback both sides
+  spreadsheet: 'images/spreadsheet.png',
+  charts:      'images/charts.png',
+  tr:          'images/tr.png',
+};
+
 const HOTELS = {
   hc: {
     name: 'Hótel Cabin',
@@ -352,7 +256,6 @@ const HOTELS = {
         name: 'Housekeeping',
         base: 'https://sites.google.com/view/prufa-upplysingasida-hotela/',
         section: 'payroll',
-        // Hardcoded tr URLs (only 2 exist, both W+vv+∑)
         trLinks: {
           'W_T:_vv_∑':  'payroll/tr/tr_W_T_vv',
           'W_kr._vv_∑': 'payroll/tr/tr_W_kr_vv',
@@ -362,88 +265,84 @@ const HOTELS = {
   }
 };
 
-// ─── CATEGORIES by value ──────────────────────────────────────
+const INTERVALS = [
+  { val:'W', label:'W', hint:'weekly' },
+  { val:'Q', label:'Q', hint:'quarterly' },
+];
+const VALUES = [
+  { val:'T:',  label:'T:',  hint:'hours' },
+  { val:'kr.', label:'kr.', hint:'ISK' },
+];
 const CATEGORIES = {
   'T:':  [
-    { val: 'vv',    label: 'vv', hint: 'viðvera' },
-    { val: 've',    label: 've', hint: 'veikindi' },
-    { val: 'vb',    label: 'vb', hint: 'vb. veikindi' },
+    { val:'vv',    label:'vv',    hint:'viðvera' },
+    { val:'ve',    label:'ve',    hint:'veikindi' },
+    { val:'vb',    label:'vb',    hint:'vb. veikindi' },
   ],
   'kr.': [
-    { val: 'vv',    label: 'vv',    hint: 'viðvera' },
-    { val: 've_vb', label: 've_vb', hint: 'veikindi' },
+    { val:'vv',    label:'vv',    hint:'viðvera' },
+    { val:'ve_vb', label:'ve_vb', hint:'veikindi' },
   ]
 };
-
-// ─── CLASSES by category ─────────────────────────────────────
 const CLASSES = {
   default: [
-    { val: '∑',  label: '∑',  hint: 'total' },
-    { val: 'dv', label: 'dv', hint: 'dagvinna' },
-    { val: 'yv', label: 'yv', hint: 'yfirvinna' },
-    { val: '90', label: '90', hint: '90%' },
-    { val: 'st', label: 'st', hint: 'staðg.' },
-    { val: '33', label: '33', hint: '33%', noNav: true },
-    { val: '45', label: '45', hint: '45%', noNav: true },
+    { val:'∑',  label:'∑',     hint:'total' },
+    { val:'dv', label:'dv',    hint:'dagvinna' },
+    { val:'yv', label:'yv',    hint:'yfirvinna' },
+    { val:'90', label:'90',    hint:'90%' },
+    { val:'st', label:'st',    hint:'staðg.' },
+    { val:'33', label:'33',    hint:'33%',    noNav:true },
+    { val:'45', label:'45',    hint:'45%',    noNav:true },
   ],
   ve_vb: [
-    { val: '∑',     label: '∑',      hint: 'total' },
-    { val: 'dv',    label: 'dv',     hint: 'dagvinna' },
-    { val: 'yv',    label: 'yv',     hint: 'yfirvinna' },
-    { val: '90_st', label: '90+st',  hint: '90%+staðg.' },
-    { val: '33_45', label: '33+45',  hint: '33%+45%', noNav: true },
+    { val:'∑',     label:'∑',      hint:'total' },
+    { val:'dv',    label:'dv',     hint:'dagvinna' },
+    { val:'yv',    label:'yv',     hint:'yfirvinna' },
+    { val:'90_st', label:'90+st',  hint:'90%+staðg.' },
+    { val:'33_45', label:'33+45',  hint:'33%+45%', noNav:true },
   ]
 };
 
-// ─── STATE ────────────────────────────────────────────────────
-const state = {
-  hotel:    'hc',
-  dept:     'housekeeping',
-  interval: 'W',
-  value:    'T:',
-  category: 'vv',
-  cls:      '∑'
-};
+const state = { hotel:'hc', dept:'housekeeping', interval:'W', value:'T:', category:'vv', cls:'∑' };
 
-// ─── URL BUILDERS ─────────────────────────────────────────────
-function intervalFolder(i)  { return i === 'W' ? 'w' : 'q'; }
-function valueLink(v)        { return v === 'T:' ? 'T' : 'kr'; }
-function classFolder(c)      { return c === '∑' ? 'sum' : c === '33_45' ? '33' : c === '90_st' ? '90' : c; }
-function catFolder(i, cat)  {
-  const c = cat === 've_vb' ? 've' : cat;
-  return intervalFolder(i) + '-' + c;
+const CAT_TO_KR     = { vv:'vv', ve:'ve_vb', vb:'ve_vb', ve_vb:'ve_vb' };
+const CAT_TO_T      = { vv:'vv', ve_vb:'ve', ve:'ve', vb:'vb' };
+const CLS_TO_VEVB   = { '33':'33_45', '45':'33_45', '90':'90_st', 'st':'90_st' };
+const CLS_FROM_VEVB = { '33_45':'33', '90_st':'90' };
+
+function mapCat(newVal) {
+  if (newVal === 'kr.') return CAT_TO_KR[state.category] || 'vv';
+  if (newVal === 'T:')  return CAT_TO_T[state.category]  || 'vv';
+  return state.category;
+}
+function mapCls(curCat, newCat) {
+  if (newCat === 've_vb' && curCat !== 've_vb') return CLS_TO_VEVB[state.cls]   || state.cls;
+  if (curCat === 've_vb' && newCat !== 've_vb') return CLS_FROM_VEVB[state.cls] || state.cls;
+  return state.cls;
 }
 
-function buildMainURL() {
-  const dept = HOTELS[state.hotel].depts[state.dept];
-  const iF   = intervalFolder(state.interval);
-  const cF   = catFolder(state.interval, state.category);
-  const clF  = classFolder(state.cls);
-  const vl   = valueLink(state.value);
-  const page = `${state.interval}_${vl}_${state.category}_${state.cls}`;
-  return `${dept.base}${dept.section}/${iF}/${cF}/${clF}/${page}`;
-}
+const iF  = () => state.interval === 'W' ? 'w' : 'q';
+const vL  = () => state.value === 'T:' ? 'T' : 'kr';
+const clF = () => state.cls === '∑' ? 'sum' : state.cls === '33_45' ? '33' : state.cls === '90_st' ? '90' : state.cls;
+const caF = () => iF() + '-' + (state.category === 've_vb' ? 've' : state.category);
+const dept = () => HOTELS[state.hotel].depts[state.dept];
 
-function buildYxURL() {
-  const dept = HOTELS[state.hotel].depts[state.dept];
-  const iF   = intervalFolder(state.interval);
-  const cF   = catFolder(state.interval, state.category);
-  const clF  = classFolder(state.cls);
-  const vl   = valueLink(state.value);
+function mainURL() {
+  const d = dept();
+  return `${d.base}${d.section}/${iF()}/${caF()}/${clF()}/${state.interval}_${vL()}_${state.category}_${state.cls}`;
+}
+function yxURL() {
+  const d = dept();
   const page = state.interval === 'Q'
-    ? `yx_Q_${vl}_${state.category}_${state.cls}`
-    : `yx_${vl}_${state.category}_${state.cls}`;
-  return `${dept.base}${dept.section}/${iF}/${cF}/${clF}/${page}`;
+    ? `yx_Q_${vL()}_${state.category}_${state.cls}`
+    : `yx_${vL()}_${state.category}_${state.cls}`;
+  return `${d.base}${d.section}/${iF()}/${caF()}/${clF()}/${page}`;
 }
-
-function buildTrURL() {
-  const dept = HOTELS[state.hotel].depts[state.dept];
+function trURL() {
   const key  = `${state.interval}_${state.value}_${state.category}_${state.cls}`;
-  const path = dept.trLinks[key];
-  return path ? dept.base + path : null;
+  const path = dept().trLinks[key];
+  return path ? dept().base + path : null;
 }
-
-// ─── EXISTENCE RULES ──────────────────────────────────────────
 function hasYx() {
   if (state.cls === 'st') return false;
   if (state.interval === 'W' && state.value === 'T:' && state.category === 'vb') return false;
@@ -453,161 +352,166 @@ function hasTr() {
   return state.interval === 'W' && state.category === 'vv' && state.cls === '∑';
 }
 
-// ─── RENDER ───────────────────────────────────────────────────
+function imgHalf(src, fallbackText) {
+  // Returns a half-tile element: image or text fallback
+  const half = document.createElement('div');
+  half.style.cssText = 'flex:1;height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;';
+  if (src) {
+    const img = document.createElement('img');
+    img.src = src; img.alt = fallbackText;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+    img.onerror = function() {
+      this.style.display='none';
+      const t=document.createElement('span');
+      t.className='tile-text';t.style.fontSize='10px';t.textContent=fallbackText;
+      half.appendChild(t);
+    };
+    half.appendChild(img);
+  } else {
+    const t = document.createElement('span');
+    t.className='tile-text';t.style.fontSize='10px';t.textContent=fallbackText;
+    half.appendChild(t);
+  }
+  return half;
+}
+
+function makeTile(item, activeClass, onClick) {
+  const { val, label, hint, noNav } = item;
+  const wrap = document.createElement('div');
+  wrap.className = 'tile' + (noNav ? ' disabled' : '');
+  if (noNav) wrap.title = 'Sheet exists — no navigation page';
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'tile-img-wrap';
+
+  const src = IMG[val];
+
+  if (Array.isArray(src)) {
+    // Split tile: two halves side by side
+    imgWrap.style.cssText += ';display:flex;flex-direction:row;padding:0;gap:1px;';
+    const [left, right] = src;
+    const leftLabel  = val === 've_vb' ? 've' : val === '90_st' ? '90' : label.split('+')[0] || label;
+    const rightLabel = val === 've_vb' ? 'vb' : val === '90_st' ? 'st' : label.split('+')[1] || '';
+    imgWrap.appendChild(imgHalf(left,  leftLabel));
+    imgWrap.appendChild(imgHalf(right, rightLabel));
+  } else if (src) {
+    const img = document.createElement('img');
+    img.src = src; img.alt = label;
+    img.onerror = function() {
+      this.style.display='none';
+      const t=document.createElement('span');t.className='tile-text';t.textContent=label;
+      imgWrap.appendChild(t);
+    };
+    imgWrap.appendChild(img);
+  } else {
+    const t = document.createElement('span');
+    t.className = 'tile-text'; t.textContent = label;
+    imgWrap.appendChild(t);
+  }
+
+  const lbl = document.createElement('div');
+  lbl.className = 'tile-label';
+  lbl.textContent = hint || label;
+
+  wrap.appendChild(imgWrap);
+  wrap.appendChild(lbl);
+  if (!noNav) wrap.onclick = onClick;
+
+  return {
+    el: wrap,
+    setActive(on) {
+      wrap.className = 'tile' + (noNav ? ' disabled' : '') + (on ? ' ' + activeClass : '');
+    }
+  };
+}
+
+function buildGroup(id, items, getActive, activeClass, onPick) {
+  const grp = document.getElementById(id);
+  grp.innerHTML = '';
+  const tiles = items.map(item => {
+    const t = makeTile(item, activeClass, () => onPick(item.val));
+    grp.appendChild(t.el);
+    return { val: item.val, tile: t };
+  });
+  tiles.forEach(({ val, tile }) => tile.setActive(val === getActive()));
+}
+
+function makeActionTile(imgKey, label, tileClass, href, active) {
+  const a = document.createElement('a');
+  a.className = 'action-tile ' + tileClass + (active ? '' : ' inactive');
+  a.href = href; a.target = '_self';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'action-img-wrap';
+  const src = IMG[imgKey];
+  if (src) {
+    const img = document.createElement('img');
+    img.src = src; img.alt = label;
+    img.onerror = function() {
+      this.style.display='none';
+      const t=document.createElement('span');
+      t.className='act-text'; t.textContent=label.slice(0,2);
+      wrap.appendChild(t);
+    };
+    wrap.appendChild(img);
+  } else {
+    const t = document.createElement('span');
+    t.className = 'act-text'; t.textContent = label.slice(0,2);
+    wrap.appendChild(t);
+  }
+
+  const lbl = document.createElement('div');
+  lbl.className = 'action-label'; lbl.textContent = label;
+  a.appendChild(wrap); a.appendChild(lbl);
+  return a;
+}
+
 function render() {
-  // Sync state from selects for hotel/dept
   state.hotel = document.getElementById('sel-hotel').value;
   state.dept  = document.getElementById('sel-dept').value;
 
-  rebuildCategoryButtons();
-  rebuildClassButtons();
+  buildGroup('grp-interval', INTERVALS, () => state.interval, 'active-blue', val => {
+    state.interval = val; render();
+  });
 
-  const mainURL = buildMainURL();
+  buildGroup('grp-value', VALUES, () => state.value, 'active-amber', val => {
+    const newCat = mapCat(val);
+    state.cls = mapCls(state.category, newCat);
+    state.category = newCat;
+    state.value = val;
+    render();
+  });
 
-  // URL display
-  document.getElementById('url-main').textContent = mainURL;
+  const cats = CATEGORIES[state.value];
+  if (!cats.map(c=>c.val).includes(state.category)) state.category = cats[0].val;
+  buildGroup('grp-category', cats, () => state.category, 'active-green', val => {
+    state.cls = mapCls(state.category, val);
+    state.category = val;
+    render();
+  });
 
-  // Main link
-  const linkMain = document.getElementById('link-main');
-  linkMain.href = mainURL;
-  linkMain.classList.remove('inactive');
+  const classes = state.category === 've_vb' ? CLASSES.ve_vb : CLASSES.default;
+  if (!classes.map(c=>c.val).includes(state.cls)) state.cls = '∑';
+  buildGroup('grp-class', classes, () => state.cls, 'active-amber', val => {
+    state.cls = val; render();
+  });
 
-  // yx link
-  const linkYx = document.getElementById('link-yx');
-  if (hasYx()) {
-    linkYx.href = buildYxURL();
-    linkYx.classList.remove('inactive');
-  } else {
-    linkYx.href = '#';
-    linkYx.classList.add('inactive');
-  }
+  document.getElementById('url-main').textContent = mainURL();
 
-  // tr link
-  const trURL = buildTrURL();
-  const linkTr = document.getElementById('link-tr');
-  if (hasTr() && trURL) {
-    linkTr.href = trURL;
-    linkTr.classList.remove('inactive');
-  } else {
-    linkTr.href = '#';
-    linkTr.classList.add('inactive');
-  }
+  const ar = document.getElementById('action-row');
+  ar.innerHTML = '';
+  ar.appendChild(makeActionTile('spreadsheet', '→ page',   'primary',   mainURL(),       true));
+  ar.appendChild(makeActionTile('charts',      '⬦ charts',  'secondary',  yxURL(),         hasYx()));
+  ar.appendChild(makeActionTile('tr',          '⟳ trend',   'tertiary',   trURL() || '#',  hasTr()));
 
-  // State pills
-  const stateRow = document.getElementById('state-row');
-  stateRow.innerHTML = `
-    <span class="state-pill ${hasYx() ? 'has-yx' : ''}">
-      <span class="dot"></span>yx ${hasYx() ? 'available' : 'n/a'}
-    </span>
-    <span class="state-pill ${hasTr() ? 'has-tr' : ''}">
-      <span class="dot"></span>tr ${hasTr() ? 'available' : 'n/a'}
-    </span>
-    <span class="code-key">${state.interval}_${valueLink(state.value)}_${state.category}_${classFolder(state.cls)}</span>
+  document.getElementById('state-row').innerHTML = `
+    <span class="state-pill ${hasYx()?'on-yx':''}"><span class="dot"></span>yx ${hasYx()?'on':'n/a'}</span>
+    <span class="state-pill ${hasTr()?'on-tr':''}"><span class="dot"></span>tr ${hasTr()?'on':'n/a'}</span>
+    <span class="code-key">${state.interval}_${vL()}_${state.category}_${state.cls}</span>
   `;
 }
 
-function rebuildCategoryButtons() {
-  const grp  = document.getElementById('grp-category');
-  const cats = CATEGORIES[state.value];
-  const colors = { vv: 'active', ve: 'active-green', vb: 'active-amber', ve_vb: 'active-green' };
-
-  // Ensure state.category is valid for current value
-  const valid = cats.map(c => c.val);
-  if (!valid.includes(state.category)) {
-    state.category = cats[0].val;
-  }
-
-  grp.innerHTML = '';
-  cats.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'sel' + (state.category === cat.val ? ' ' + (colors[cat.val] || 'active') : '');
-    btn.innerHTML = `${cat.label} <span class="btn-hint">${cat.hint}</span>`;
-    btn.onclick = () => { state.cls = mapClass(state.category, cat.val); state.category = cat.val; render(); };
-    grp.appendChild(btn);
-  });
-}
-
-function rebuildClassButtons() {
-  const grp     = document.getElementById('grp-class');
-  const classes = state.category === 've_vb' ? CLASSES.ve_vb : CLASSES.default;
-
-  // Ensure state.cls is valid for current category
-  const valid = classes.map(c => c.val);
-  if (!valid.includes(state.cls)) {
-    state.cls = '∑';
-  }
-
-  grp.innerHTML = '';
-  classes.forEach(cls => {
-    const btn = document.createElement('button');
-    const isActive = state.cls === cls.val;
-    btn.className = 'sel' + (isActive ? ' active-amber' : '') + (cls.noNav ? ' disabled-btn' : '');
-    btn.innerHTML = `${cls.label} <span class="btn-hint">${cls.hint}</span>`;
-    if (!cls.noNav) {
-      btn.onclick = () => { state.cls = cls.val; render(); };
-    }
-    if (cls.noNav) {
-      btn.title = 'Sheet exists — no navigation page';
-    }
-    grp.appendChild(btn);
-  });
-}
-
-// ─── CATEGORY MAPPING across value switches ───────────────────
-const CAT_MAP_TO_KR = { vv: 'vv', ve: 've_vb', vb: 've_vb', ve_vb: 've_vb' };
-const CAT_MAP_TO_T  = { vv: 'vv', ve_vb: 've', ve: 've',    vb: 'vb'       };
-
-function mapCategory(newValue) {
-  if (newValue === 'kr.') return CAT_MAP_TO_KR[state.category] || 'vv';
-  if (newValue === 'T:')  return CAT_MAP_TO_T[state.category]  || 'vv';
-  return state.category;
-}
-
-// ─── CLASS MAPPING when category changes ──────────────────────
-// Into ve_vb: individual classes collapse to combined
-const CLS_TO_VEVB   = { '33': '33_45', '45': '33_45', '90': '90_st', 'st': '90_st' };
-// Out of ve_vb: combined classes split to nearest individual
-const CLS_FROM_VEVB = { '33_45': '33', '90_st': '90' };
-
-function mapClass(currentCat, newCat) {
-  if (newCat === 've_vb' && currentCat !== 've_vb') {
-    return CLS_TO_VEVB[state.cls] || state.cls;
-  }
-  if (currentCat === 've_vb' && newCat !== 've_vb') {
-    return CLS_FROM_VEVB[state.cls] || state.cls;
-  }
-  return state.cls;
-}
-
-// ─── PICK helpers ─────────────────────────────────────────────
-function pick(axis, val, btn) {
-  if (axis === 'value') {
-    const newCat   = mapCategory(val);
-    state.cls      = mapClass(state.category, newCat);
-    state.category = newCat;
-  }
-  if (axis === 'category') {
-    state.cls = mapClass(state.category, val);
-  }
-  state[axis] = val;
-  // Update button active states in the group
-  const grpId  = { interval: 'grp-interval', value: 'grp-value' }[axis];
-  const colors = { interval: 'active', value: 'active-green' };
-  if (grpId) {
-    document.querySelectorAll('#' + grpId + ' button.sel').forEach(b => {
-      b.className = 'sel';
-    });
-    btn.className = 'sel ' + (colors[axis] || 'active');
-  }
-  render();
-}
-
-function onHotelChange() {
-  // In future: repopulate dept dropdown based on hotel
-  render();
-}
-
-// ─── INIT ─────────────────────────────────────────────────────
+function onHotelChange() { render(); }
 render();
 </script>
 </body>
